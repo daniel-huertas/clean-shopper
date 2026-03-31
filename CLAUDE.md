@@ -33,3 +33,4 @@ Single-user app. No authentication in V1. Local state plus Supabase for data per
 - Build plan: See /docs/build-plan.md -- build phase by phase, do not jump ahead
 - Project context: See /docs/project-context.md -- full project intake and design decisions
 - Project context skill: See /.claude/commands/project-context.md -- use /project-context to generate a structured context doc from any brief, PRD, or notes
+- Prompt optimizer skill: See /.claude/commands/prompt-optimizer.md -- use /prompt-optimizer to evaluate and refine instructions before sending them
