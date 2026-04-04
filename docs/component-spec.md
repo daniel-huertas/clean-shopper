@@ -57,7 +57,7 @@ This file defines every reusable UI component in Clean Shopper. Before creating 
 
 - Use for any product listing — search results and saved library.
 - Do not use for the full product detail view. ProductCard is a summary; detail is a separate layout.
-- Always pass a complete Product object. Do not render a ProductCard with missing fields.
+- Always pass all required props (name, safetyRating, category, description). Do not render a ProductCard with missing fields.
 - Composes SafetyBadge and CategoryTag internally. Do not duplicate their markup outside this component.
 
 ---
@@ -70,7 +70,7 @@ This file defines every reusable UI component in Clean Shopper. Before creating 
 
 | Prop | Type | Required | Description |
 |---|---|---|---|
-| score | SafetyScore | yes | One of 'clean', 'caution', or 'avoid' |
+| rating | SafetyRating | yes | Object with `score` (number) and `level` ('clean' \| 'caution' \| 'avoid'). Displays as "92 · Clean". |
 | size | 'sm' \| 'md' | no | Controls text size and padding. Defaults to 'md' |
 
 ### Visual Structure
@@ -411,11 +411,11 @@ All components live in `/src/components/` with PascalCase filenames:
 
 ```
 src/components/
-├── ProductCard.tsx      (exists)
-├── SafetyBadge.tsx      (to build)
-├── CategoryTag.tsx      (to build)
+├── ProductCard.tsx      (exists — composes SafetyBadge + CategoryTag)
+├── SafetyBadge.tsx      (exists)
+├── CategoryTag.tsx      (exists)
 ├── SearchBar.tsx         (to build)
-├── NavBar.tsx            (to build)
+├── NavBar.tsx            (exists)
 ├── Button.tsx            (to build)
 ├── InputField.tsx        (to build)
 └── EmptyState.tsx        (to build)
