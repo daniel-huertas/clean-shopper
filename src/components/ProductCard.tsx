@@ -1,6 +1,7 @@
 import type { SafetyRating } from '../types/product';
 import SafetyBadge from './SafetyBadge';
 import CategoryTag from './CategoryTag';
+import Button from './Button';
 
 interface ProductCardProps {
   name: string;
@@ -9,6 +10,8 @@ interface ProductCardProps {
   description: string;
   onClick?: () => void;
   isLoading?: boolean;
+  isSaved?: boolean;
+  onToggleSave?: () => void;
 }
 
 function ProductCardSkeleton() {
@@ -34,6 +37,8 @@ export default function ProductCard({
   description,
   onClick,
   isLoading = false,
+  isSaved = false,
+  onToggleSave,
 }: ProductCardProps) {
   if (isLoading) {
     return <ProductCardSkeleton />;
@@ -72,6 +77,21 @@ export default function ProductCard({
       <p className="text-body text-neutral-600 line-clamp-2">
         {description}
       </p>
+
+      {onToggleSave && (
+        <div
+          className="flex items-center justify-end mt-space-xs"
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+        >
+          <Button
+            label={isSaved ? 'Saved' : 'Save to List'}
+            onClick={onToggleSave}
+            variant={isSaved ? 'secondary' : 'primary'}
+            size="sm"
+          />
+        </div>
+      )}
     </div>
   );
 }

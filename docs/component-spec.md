@@ -25,6 +25,8 @@ This file defines every reusable UI component in Clean Shopper. Before creating 
 | description | string | yes | Short product description, truncated to two lines |
 | onClick | () => void | no | Callback when the card is tapped — opens product detail |
 | isLoading | boolean | no | Shows a skeleton placeholder instead of content. Defaults to false |
+| isSaved | boolean | no | Controlled save state. When true, the save button reads "Saved" and uses the secondary variant with a filled bookmark icon. Defaults to false |
+| onToggleSave | () => void | no | Callback when the save button is clicked. When provided, the card renders a Save/Saved button in its footer. Clicks on the save button do not trigger `onClick` |
 
 ### Visual Structure
 
@@ -36,6 +38,8 @@ This file defines every reusable UI component in Clean Shopper. Before creating 
 │                                           │
 │  Two-line description text that           │
 │  truncates with an ellipsis...            │
+│                                           │
+│  [Save to List]                           │  (rendered only when onToggleSave is provided)
 └─────────────────────────────────────────┘
 ```
 
@@ -43,6 +47,8 @@ This file defines every reusable UI component in Clean Shopper. Before creating 
 **Top row:** `flex items-center justify-between gap-space-sm`
 **Product name:** `text-h3 text-neutral-900`
 **Description:** `text-body text-neutral-600 line-clamp-2`
+**Footer (save button wrapper):** `flex items-center justify-end mt-space-xs`
+**Save button:** `Button` component, `size="sm"`, `variant="primary"` when unsaved, `variant="secondary"` when saved. Label is `"Save to List"` / `"Saved"`. Clicks must call `e.stopPropagation()` so the card's `onClick` does not fire.
 
 ### States
 
@@ -52,13 +58,15 @@ This file defines every reusable UI component in Clean Shopper. Before creating 
 | Hover | `shadow-shadow-md` and `cursor-pointer` when onClick is provided |
 | Pressed | `shadow-shadow-sm` returns (shadow resets on mousedown) |
 | Loading | When `isLoading` is true, renders animated pulse placeholders (`bg-neutral-200 animate-pulse rounded-radius-md`) in place of name, badge, tag, and description. Card container remains visible. |
+| Saved | When `isSaved` is true and `onToggleSave` is provided, the save button reads "Saved" and uses the secondary variant. Click toggles back to unsaved. |
 
 ### Usage Rules
 
-- Use for any product listing — search results and saved library.
+- Use for any product listing — search results, browse, and saved library.
 - Do not use for the full product detail view. ProductCard is a summary; detail is a separate layout.
 - Always pass all required props (name, safetyRating, category, description). Do not render a ProductCard with missing fields.
-- Composes SafetyBadge and CategoryTag internally. Do not duplicate their markup outside this component.
+- Composes SafetyBadge, CategoryTag, and Button internally. Do not duplicate their markup outside this component.
+- The save button is opt-in: only rendered when `onToggleSave` is provided. Feature pages own the saved-state data and pass `isSaved` down as a controlled prop.
 
 ---
 
