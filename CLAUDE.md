@@ -15,6 +15,7 @@ Single-user app. No authentication in V1. Local state plus Supabase for data per
 
 ## Conventions
 - Components: PascalCase filenames, one component per file, lives in /src/components/
+- File placement: Shared components reused across screens belong in /src/components/. Files specific to one screen belong in that screen's folder under /src/features/. Do not mix the two — if a component is only used by one screen, keep it under that feature folder; if it gets reused elsewhere, promote it to /src/components/.
 - Utility functions: camelCase, lives in /src/lib/
 - API calls: all external API calls through /src/lib/api/, never inline in components
 - Styling: Tailwind only. No inline styles. No CSS modules.
